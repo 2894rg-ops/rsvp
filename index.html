@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>RSVP · Reebhu &amp; Binita</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  @font-face { font-family: 'Kalpana'; src: url(kalpana.ttf); font-display: swap; }
+  :root {
+    --bg: #520006; --bg-deep: #2e0004; --gold: #f6c544; --gold-line: #d9a93a;
+    --cream: #fbecc8; --field: #fffcf4; --ink: #3a0b08; --err: #ffb4a6;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+  body {
+    margin: 0; min-height: 100vh; color: var(--cream);
+    font-family: 'Kalam', cursive; font-weight: 300; font-size: 18px; line-height: 1.45;
+    background: radial-gradient(120% 60% at 50% 25%, #6e0a10 0%, var(--bg) 55%, var(--bg-deep) 100%);
+  }
+  .bn { font-family: 'Kalpana', 'Kalam', cursive; font-weight: 400; }
+  main { max-width: 460px; margin: 0 auto; padding: 28px 16px 48px; position: relative; }
+
+  header { text-align: center; position: relative; padding-top: 18px; }
+  .bf { position: absolute; right: 18px; top: 0; width: 46px; transform: rotate(18deg); }
+  .dh { width: 190px; max-width: 60%; display: block; margin: 0 auto; }
+  h1 { margin: 6px 0 0; font-weight: 400; font-size: 22px; letter-spacing: .32em; color: var(--gold); padding-left: .32em; }
+  .sub { margin: 2px 0 0; color: var(--gold); font-size: 18px; }
+  .couple { margin: 10px 0 0; font-size: 17px; }
+  .by { margin: 2px 0 0; font-size: 15px; opacity: .85; }
+
+  form { margin-top: 26px; }
+  fieldset, .field { border: 0; margin: 0 0 22px; padding: 0; }
+  legend, label.q {
+    display: block; padding: 0; margin-bottom: 8px;
+    color: var(--gold); font-weight: 400; font-size: 18px;
+  }
+  .req { color: var(--gold-line); }
+  input[type=text], input[type=number] {
+    width: 100%; font: inherit; font-weight: 400; color: var(--ink);
+    background: var(--field); border: 1px solid var(--gold-line); border-radius: 8px;
+    padding: 11px 13px; min-height: 48px;
+  }
+  input:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+  /* tappable option rows */
+  .opt {
+    display: flex; align-items: center; gap: 12px; min-height: 48px;
+    padding: 10px 14px; margin-bottom: 8px; cursor: pointer;
+    border: 1px solid rgba(246,197,68,.45); border-radius: 10px; background: rgba(0,0,0,.14);
+  }
+  .opt:has(input:checked) { border-color: var(--gold); background: rgba(246,197,68,.13); }
+  .opt input { width: 22px; height: 22px; margin: 0; flex: none; accent-color: var(--gold); }
+  .opt small { display: block; font-size: 14px; opacity: .8; line-height: 1.2; }
+  .row { display: flex; gap: 8px; } .row .opt { flex: 1; }
+
+  .hidden { display: none; }
+  .error { color: var(--err); font-size: 15px; margin: 4px 0 0; min-height: 0; }
+
+  button {
+    width: 100%; min-height: 54px; border: 0; border-radius: 12px; cursor: pointer;
+    font: inherit; font-weight: 700; font-size: 19px; letter-spacing: .02em;
+    color: var(--ink); background: var(--gold);
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  button:focus-visible { outline: 3px solid var(--cream); outline-offset: 3px; }
+  button svg { width: 22px; height: 22px; flex: none; }
+  .note { text-align: center; font-size: 15px; opacity: .85; margin: 10px 0 0; }
+
+  .done { text-align: center; margin-top: 30px; }
+  .done p { margin: 6px 0; }
+  .done a { color: var(--gold); }
+  footer { text-align: center; margin-top: 34px; font-size: 16px; }
+  footer .fam { color: var(--gold); font-weight: 400; font-size: 19px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img class="bf" src="butterfly.png" alt="">
+    <img class="dh" src="dhonnobad.png" alt="ধন্যবাদ">
+    <h1>RSVP</h1>
+    <p class="sub bn">অনুগ্রহ করে জানাবেন</p>
+    <p class="couple">Wedding of Reebhu &amp; Binita<br>10–13 December 2026</p>
+    <p class="by">Kindly reply by 11 November 2026</p>
+  </header>
+
+  <form id="rsvp" novalidate>
+    <div class="field">
+      <label class="q" for="name">Your name <span class="req">*</span></label>
+      <input id="name" name="name" type="text" autocomplete="name" required>
+      <p class="error" id="err-name"></p>
+    </div>
+
+    <fieldset>
+      <legend>Will you be joining us? <span class="req">*</span></legend>
+      <div class="row">
+        <label class="opt"><input type="radio" name="joining" value="Yes"> Yes</label>
+        <label class="opt"><input type="radio" name="joining" value="No"> No</label>
+      </div>
+      <p class="error" id="err-joining"></p>
+    </fieldset>
+
+    <div id="yes-part" class="hidden">
+      <fieldset>
+        <legend>Which dates will you be with us? <span class="req">*</span></legend>
+        <label class="opt"><input type="checkbox" name="dates" value="10 Dec – Aiburobhat">
+          <span>10 Dec, Thursday<small>Aiburobhat</small></span></label>
+        <label class="opt"><input type="checkbox" name="dates" value="11 Dec – Haldi & Wedding">
+          <span>11 Dec, Friday<small>Haldi &amp; Wedding</small></span></label>
+        <label class="opt"><input type="checkbox" name="dates" value="12 Dec – Bodhu Boron">
+          <span>12 Dec, Saturday<small>Bodhu Boron</small></span></label>
+        <label class="opt"><input type="checkbox" name="dates" value="13 Dec – Bhat Kapor & Reception">
+          <span>13 Dec, Sunday<small>Bhat Kapor &amp; Reception</small></span></label>
+        <p class="error" id="err-dates"></p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Coming alone or with family? <span class="req">*</span></legend>
+        <div class="row">
+          <label class="opt"><input type="radio" name="party" value="Alone"> Alone</label>
+          <label class="opt"><input type="radio" name="party" value="With family"> With family</label>
+        </div>
+        <p class="error" id="err-party"></p>
+      </fieldset>
+
+      <div id="family-part" class="field hidden">
+        <label class="q" for="count">How many people in total, including you? <span class="req">*</span></label>
+        <input id="count" name="count" type="number" inputmode="numeric" min="2" max="30" step="1">
+        <p class="error" id="err-count"></p>
+      </div>
+    </div>
+
+    <button type="submit">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>
+      Send RSVP on WhatsApp
+    </button>
+    <p class="note">WhatsApp will open with your reply ready — just tap <strong>Send</strong>.</p>
+  </form>
+
+  <div class="done hidden" id="done" role="status">
+    <p class="bn" style="font-size:24px;color:var(--gold)">ধন্যবাদ!</p>
+    <p>WhatsApp should have opened with your RSVP. Please tap <strong>Send</strong> there.</p>
+    <p>Didn't open? <a id="again" href="#">Tap here to try again</a>.</p>
+  </div>
+
+  <footer>
+    With respectful regards,<br><span class="fam">The Ghosh family</span>
+  </footer>
+</main>
+
+<script>
+  // Replies go to this WhatsApp number (country code, no +)
+  const PHONE = '918826626690';
+
+  const form = document.getElementById('rsvp');
+  const yesPart = document.getElementById('yes-part');
+  const familyPart = document.getElementById('family-part');
+  const val = name => (form.querySelector(`[name="${name}"]:checked`) || {}).value;
+
+  form.addEventListener('change', () => {
+    yesPart.classList.toggle('hidden', val('joining') !== 'Yes');
+    familyPart.classList.toggle('hidden', val('party') !== 'With family');
+  });
+
+  function setErr(id, msg) { document.getElementById('err-' + id).textContent = msg || ''; return !msg; }
+
+  let link = '';
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();   // not form.name: that's the form's own name
+    const joining = val('joining');
+    const dates = [...form.querySelectorAll('[name="dates"]:checked')].map(d => d.value);
+    const party = val('party');
+    const count = parseInt(document.getElementById('count').value, 10);
+
+    let ok = setErr('name', name ? '' : 'Please enter your name.');
+    ok = setErr('joining', joining ? '' : 'Please choose Yes or No.') && ok;
+    if (joining === 'Yes') {
+      ok = setErr('dates', dates.length ? '' : 'Please tick at least one date.') && ok;
+      ok = setErr('party', party ? '' : 'Please choose Alone or With family.') && ok;
+      if (party === 'With family')
+        ok = setErr('count', count >= 2 && count <= 30 ? '' : 'Please enter a number from 2 to 30.') && ok;
+    }
+    if (!ok) { form.querySelector('.error:not(:empty)')?.scrollIntoView({ block: 'center', behavior: 'smooth' }); return; }
+
+    const lines = ["RSVP – Reebhu & Binita's wedding", `Name: ${name}`, `Joining: ${joining}`];
+    if (joining === 'Yes') {
+      lines.push('Dates:', ...dates.map(d => `• ${d}`));
+      lines.push(party === 'Alone' ? 'Coming: Alone' : `Coming: With family – ${count} people in total`);
+    }
+    link = `https://wa.me/${PHONE}?text=${encodeURIComponent(lines.join('\n'))}`;
+    document.getElementById('done').classList.remove('hidden');
+    form.classList.add('hidden');
+    window.location.href = link;
+  });
+  document.getElementById('again').addEventListener('click', e => { e.preventDefault(); if (link) window.location.href = link; });
+</script>
+</body>
+</html>
