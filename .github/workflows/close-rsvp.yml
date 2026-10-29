@@ -1,0 +1,33 @@
+# Replaces the RSVP form with the illustration-only page once RSVPs close
+# (00:05 India time on 12 November 2026 = 18:35 UTC on 11 November).
+# No third-party actions: it only uses the gh CLI that comes with the runner.
+name: Close RSVP
+
+on:
+  schedule:
+    - cron: '35 18 11 11 *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  close:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Swap index.html for closed.html
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          # the cron line repeats every year; only act in 2026, and only once
+          [ "$(date -u +%Y)" = "2026" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ] || exit 0
+          closed=$(gh api "repos/$REPO/contents/closed.html" --jq .content | tr -d '\n')
+          sha=$(gh api "repos/$REPO/contents/index.html" --jq .sha)
+          current=$(gh api "repos/$REPO/contents/index.html" --jq .content | tr -d '\n')
+          [ "$current" = "$closed" ] && { echo "already closed"; exit 0; }
+          gh api -X PUT "repos/$REPO/contents/index.html" \
+            -f message="Close RSVPs: show illustration only" -f content="$closed" -f sha="$sha" --silent
+          gh api -X POST "repos/$REPO/pages/builds" --silent || true
+          echo "RSVP form closed"
