@@ -248,8 +248,10 @@
 </main>
 
 <script>
-  // Replies go to this WhatsApp number (country code, no +)
-  const PHONE = '918826626690';
+  // Replies go to one of these WhatsApp numbers (country code, no +).
+  // Each card version links with its own tag (?r=2); anything else uses the first.
+  const PHONES = { '1': '918826626690', '2': '917503063252' };
+  const PHONE = PHONES[new URLSearchParams(location.search).get('r')] || PHONES['1'];
 
   const form = document.getElementById('rsvp');
   const yesPart = document.getElementById('yes-part');
