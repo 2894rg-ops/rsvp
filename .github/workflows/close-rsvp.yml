@@ -1,11 +1,12 @@
 # Replaces the RSVP form with the illustration-only page once RSVPs close
-# (00:05 India time on 12 November 2026 = 18:35 UTC on 11 November).
+# (00:05 India time on 1 December 2026 = 18:35 UTC on 30 November; the 11 November
+# deadline for the other cards is handled in the page itself).
 # No third-party actions: it only uses the gh CLI that comes with the runner.
 name: Close RSVP
 
 on:
   schedule:
-    - cron: '35 18 11 11 *'
+    - cron: '35 18 30 11 *'
   workflow_dispatch:
 
 permissions:

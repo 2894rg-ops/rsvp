@@ -7,9 +7,13 @@
 <meta name="theme-color" content="#7a0f16">
 <title>RSVP · Reebhu &amp; Binita</title>
 <script>
-  // RSVPs close at the end of 11 November 2026, India time. After that only the couple
-  // illustration is shown (a scheduled GitHub Action also swaps in closed.html).
-  if (Date.now() >= Date.parse('2026-11-12T00:00:00+05:30')) document.documentElement.classList.add('closed');
+  // RSVPs close at the end of 11 November 2026, India time; the wedding & reception card (?r=3)
+  // stays open until the end of 30 November. After that only the couple illustration is shown
+  // (a scheduled GitHub Action also swaps in closed.html once the last one has closed).
+  const TAG = new URLSearchParams(location.search).get('r');
+  const SHORT = TAG === '3';
+  if (Date.now() >= Date.parse(SHORT ? '2026-12-01T00:00:00+05:30' : '2026-11-12T00:00:00+05:30'))
+    document.documentElement.classList.add('closed');
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -166,7 +170,7 @@
 <header class="topbar">
   <div class="topbar-in">
     <div class="brand"><img src="couple.png" alt=""><span class="names">Reebhu <span class="weds">weds</span> Binita</span></div>
-    <div class="when">10–13 December 2026</div>
+    <div class="when" id="when">10–13 December 2026</div>
   </div>
 </header>
 
@@ -176,7 +180,7 @@
     <p class="ty">Thank you</p>
     <h1>RSVP</h1>
     <p class="sub bn">অনুগ্রহ করে জানাবেন</p>
-    <p class="by">Kindly reply by 11 November 2026</p>
+    <p class="by" id="by">Kindly reply by 11 November 2026</p>
   </div>
 
   <div class="card">
@@ -200,14 +204,18 @@
         <fieldset class="field" id="f-dates">
           <legend>Which dates will you be with us?&nbsp;<span class="req">*</span> <span class="hint">Select all that apply</span></legend>
           <div class="choices dates">
-            <label class="opt"><input type="checkbox" name="dates" value="10 December 2026, Thursday – Aiburobhat">
+            <label class="opt" data-full><input type="checkbox" name="dates" value="10 December 2026, Thursday – Aiburobhat">
               <span><span class="t">10 December 2026, Thursday</span><small>Aiburobhat · <span class="bn">আইবুড়োভাত</span></small></span></label>
-            <label class="opt"><input type="checkbox" name="dates" value="11 December 2026, Friday – Haldi & Wedding">
+            <label class="opt" data-full><input type="checkbox" name="dates" value="11 December 2026, Friday – Haldi & Wedding">
               <span><span class="t">11 December 2026, Friday</span><small>Haldi &amp; Wedding · <span class="bn">গায়ে হলুদ ও শুভ বিবাহ</span></small></span></label>
-            <label class="opt"><input type="checkbox" name="dates" value="12 December 2026, Saturday – Griha Pravesh">
+            <label class="opt" data-full><input type="checkbox" name="dates" value="12 December 2026, Saturday – Griha Pravesh">
               <span><span class="t">12 December 2026, Saturday</span><small>Griha Pravesh · <span class="bn">বধূ বরণ</span></small></span></label>
-            <label class="opt"><input type="checkbox" name="dates" value="13 December 2026, Sunday – Bhat Kapor & Reception">
+            <label class="opt" data-full><input type="checkbox" name="dates" value="13 December 2026, Sunday – Bhat Kapor & Reception">
               <span><span class="t">13 December 2026, Sunday</span><small>Bhat Kapor &amp; Reception · <span class="bn">ভাত-কাপড়, বৌভাত ও প্রীতিভোজ</span></small></span></label>
+            <label class="opt" data-short><input type="checkbox" name="dates" value="11 December 2026, Friday – Wedding">
+              <span><span class="t">11 December 2026, Friday</span><small>Wedding · <span class="bn">শুভ বিবাহ</span></small></span></label>
+            <label class="opt" data-short><input type="checkbox" name="dates" value="13 December 2026, Sunday – Reception">
+              <span><span class="t">13 December 2026, Sunday</span><small>Reception · <span class="bn">বৌভাত ও প্রীতিভোজ</span></small></span></label>
           </div>
           <p class="error" id="err-dates"></p>
         </fieldset>
@@ -249,9 +257,16 @@
 
 <script>
   // Replies go to one of these WhatsApp numbers (country code, no +).
-  // Each card version links with its own tag (?r=2); anything else uses the first.
-  const PHONES = { '1': '918826626690', '2': '917503063252' };
-  const PHONE = PHONES[new URLSearchParams(location.search).get('r')] || PHONES['1'];
+  // Each card version links with its own tag (?r=2, ?r=3); anything else uses the first.
+  const PHONES = { '1': '918826626690', '2': '917503063252', '3': '917503063252' };
+  const PHONE = PHONES[TAG] || PHONES['1'];
+
+  // the wedding & reception card only invites to 11 and 13 December, and replies run to 30 November
+  document.querySelectorAll(SHORT ? '[data-full]' : '[data-short]').forEach(el => el.remove());
+  if (SHORT) {
+    document.getElementById('when').textContent = '11 & 13 December 2026';
+    document.getElementById('by').textContent = 'Kindly reply by 30 November 2026';
+  }
 
   const form = document.getElementById('rsvp');
   const yesPart = document.getElementById('yes-part');
