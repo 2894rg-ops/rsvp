@@ -7,12 +7,13 @@
 <meta name="theme-color" content="#7a0f16">
 <title>RSVP · Reebhu &amp; Binita</title>
 <script>
-  // RSVPs close at the end of 11 November 2026, India time; the wedding & reception card (?r=3)
-  // stays open until the end of 30 November. After that only the couple illustration is shown
+  // RSVPs close at the end of 11 November 2026, India time; the cards tagged ?r=2 and ?r=3
+  // stay open until the end of 30 November. After that only the couple illustration is shown
   // (a scheduled GitHub Action also swaps in closed.html once the last one has closed).
   const TAG = new URLSearchParams(location.search).get('r');
   const SHORT = TAG === '3';
-  if (Date.now() >= Date.parse(SHORT ? '2026-12-01T00:00:00+05:30' : '2026-11-12T00:00:00+05:30'))
+  const LATE = TAG === '2' || TAG === '3';
+  if (Date.now() >= Date.parse(LATE ? '2026-12-01T00:00:00+05:30' : '2026-11-12T00:00:00+05:30'))
     document.documentElement.classList.add('closed');
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -263,10 +264,8 @@
 
   // the wedding & reception card only invites to 11 and 13 December, and replies run to 30 November
   document.querySelectorAll(SHORT ? '[data-full]' : '[data-short]').forEach(el => el.remove());
-  if (SHORT) {
-    document.getElementById('when').textContent = '11 & 13 December 2026';
-    document.getElementById('by').textContent = 'Kindly reply by 30 November 2026';
-  }
+  if (SHORT) document.getElementById('when').textContent = '11 & 13 December 2026';
+  if (LATE) document.getElementById('by').textContent = 'Kindly reply by 30 November 2026';
 
   const form = document.getElementById('rsvp');
   const yesPart = document.getElementById('yes-part');
